@@ -1,0 +1,337 @@
+#!/usr/bin/gnuplot
+
+# This script is called by script
+# ./make_combination_herdan.bash
+
+#TITLE = GPVAL_PWD
+TITLE = "`pwd | perl -pe "s|.*\/(.*)_27$|\1.txt|;"`"
+
+print TITLE
+
+#set terminal postscript eps enhanced color "Helvetica" 15
+set terminal postscript eps enhanced "Helvetica" 15
+
+set size ratio 0.5
+# set format xy "%2.0t{/Symbol \264}10^{%L}"
+
+in(a,b,c)=((b<a)?log(-1):1)*((b>c)?log(-1):1)
+peak(a,b,h,x)=h*((x>a)?1:0)*((x<b)?1:0)
+
+# FUNCTIONS
+
+s(r)=1/(1+abs(r))
+
+Constant(n,b)=n**b
+Davis_0(n)=n*log(n)/(n-1)
+Davis(n,a)=Davis_0(n*exp(-a))/Davis_0(exp(-a))
+Logistic_0(n)=2*n/(n+1)
+Logistic_S(n,c)=(2**(1/c))*n/(n**c+1)**(1/c)
+Logistic_C_S(n,c,b)=Logistic_S(n,c)**(1-b)*n**b
+Logistic_C(n,c,b,a)=Logistic_C_S(n*exp(-a),c,b)/Logistic_C_S(exp(-a),c,b)
+Logistic(n,c,a)=Logistic_S(n*exp(-a),c)/Logistic_S(exp(-a),c)
+Linear_0(n,c)=(n<1)?n:(n>exp(1/c))?sqrt(exp(1/c)):exp(log(n)-c/2.0*log(n)**2)
+Linear(n,c,a)=Linear_0(n*exp(-a),c)/Linear_0(exp(-a),c)
+
+M1=50
+M2=50
+binom(r,k)=exp(sum [i=1:k] log(r-i+1)-log(i))
+relative_constant(f,b)=((f<M1)?binom(f-b-1,f-1):binom(M1-b-1,M1-1)*((M1-2)/(f-1.0))**b)
+#series(r,k)=(-log(1-r)-sum [j=1:k-1] r**j/j)/r**k
+series(r,k)=(abs(r)<1)?sum [j=0:M2] r**j/(j+k):NaN
+
+a_logistic(k,l,c,b)=(l<0||l>k)?0:(k==0)?1:(-1+b-c*(l-1))*a_logistic(k-1,l-1,c,b)+(k-1-b+c*l)*a_logistic(k-1,l,c,b)
+polynomial_logistic(k,u,c,b)=sum [l=0:k] a_logistic(k,l,c,b)*u**l
+relative_logistic(f,u,c,b)=sum [k=0:f-1] (polynomial_logistic(k,u,c,b)/gamma(k+1))
+
+a_linear(k,l,c)=(l<0||l>k)?0:(k==0)?1:c*a_linear(k-1,l-1,c)+(k-2)*a_linear(k-1,l,c)-(l+1)*a_linear(k-1,l+1,c)
+polynomial_linear(k,u,c)=sum [l=0:k] a_linear(k,l,c)*u**l
+relative_linear(f,u,c)=sum [k=0:f-1] (polynomial_linear(k,u,c)/gamma(k+1))
+
+Constant_rank(f,n,b)=relative_constant(f,b)*Constant(n,b)
+Davis_rank_0(f,n)=series(1-1/n,f)
+Davis_rank(f,n,a)=Davis_rank_0(f,n*exp(-a))/Davis_0(exp(-a))
+Logistic_rank_0(f,n)=2*exp(f*log(n/(n+1)))
+Logistic_rank_S(f,n,c)=relative_logistic(f,1/(n**c+1),c,0)*Logistic_S(n,c)
+Logistic_rank(f,n,c,a)=Logistic_rank_S(f,n*exp(-a),c)/Logistic_S(exp(-a),c)
+Logistic_rank_C_S(f,n,c,b)=relative_logistic(f,1/(n**c+1),c,b)*Logistic_C_S(n,c,b)
+Logistic_rank_C(f,n,c,b,a)=Logistic_rank_C_S(f,n*exp(-a),c,b)/Logistic_C_S(exp(-a),c,b)
+Linear_rank_0(f,n,c)=relative_linear(f,log(n),c)*Linear_0(n,c)
+Linear_rank(f,n,c,a)=Linear_rank_0(f,n*exp(-a),c)/Linear_0(exp(-a),c)
+
+Constant_rate(n,b)=b
+Davis_rate_0(n)=1/log(n)-1/(n-1)
+Davis_rate(n,a)=Davis_rate_0(n*exp(-a))
+Logistic_rate_0(n)=1/(n+1)
+Logistic_rate_S(n,c)=1/(n**c+1)
+Logistic_rate(n,c,a)=Logistic_rate_S(n*exp(-a),c)
+Logistic_rate_C_S(n,c,b)=(1-b)*Logistic_rate_S(n,c)+b
+Logistic_rate_C(n,c,b,a)=Logistic_rate_C_S(n*exp(-a),c,b)
+Linear_rate_0(n,c)=(n<1)?1:(n>exp(1/c))?0:1-c*log(n)
+Linear_rate(n,c,a)=Linear_rate_0(n*exp(-a),c)
+
+# DISUSED FUNCTIONS
+
+Bell_0(u)=0.5*log(sqrt(1+u**2)+u)-0.5*log(sqrt(1+u**2)-u)
+Bell(n,c)=exp(Bell_0(c*log(n))*1/c)
+Cauchy_0(u)=atan(u)
+Cauchy(n,c)=exp(Cauchy_0(c*log(n))*1/c)
+Bell_rate_0(u)=1/sqrt(1+u**2)
+Bell_rate(n,c)=Bell_rate_0(c*log(n))
+Cauchy_rate_0(u)=1/(1+u**2)
+Cauchy_rate(n,c)=Cauchy_rate_0(c*log(n))
+
+# TOKENS-TYPES
+
+TT1(n)=Constant(n,s(b1))
+fit [1:][] TT1(x) 'herdan_hapaxes_exp.csv' u 1:2 via b1
+#fit [1:][] log(TT1(x)) 'herdan_hapaxes_exp.csv' u 1:(log($2)) via b1
+
+TT2(n)=Davis(n,s(a2)*20)
+fit [1:][] TT2(x) 'herdan_hapaxes_exp.csv' u 1:2 via a2
+#fit [1:][] log(TT2(x)) 'herdan_hapaxes_exp.csv' u 1:(log($2)) via a2
+
+TT3(n)=Logistic_C(n,s(c3),s(b3),s(a3)*20)
+fit [1:][] TT3(x) 'herdan_hapaxes_exp.csv' u 1:2 via c3,b3,a3
+#fit [1:][] log(TT3(x)) 'herdan_hapaxes_exp.csv' u 1:(log($2)) via c3,b3,a3
+
+TT4(n)=Linear(n,s(c4)*0.1,s(a4)*20)
+fit [1:][] TT4(x) 'herdan_hapaxes_exp.csv' u 1:2 via c4,a4
+#fit [1:][] log(TT4(x)) 'herdan_hapaxes_exp.csv' u 1:(log($2)) via c4,a4
+
+# TOKENS-HAPAXES
+
+TH1(n)=Constant_rate(n,s(b1))
+#fit [1:][] TH1(x) 'herdan_hapaxes_exp.csv' u 1:($3/$2) via b1
+
+TH2(n)=Davis_rate(n,s(a2)*20)
+#fit [1:][] TH2(x) 'herdan_hapaxes_exp.csv' u 1:($3/$2) via a2
+
+TH3(n)=Logistic_rate_C(n,s(c3),s(b3),s(a3)*20)
+#fit [1:][] TH3(x) 'herdan_hapaxes_exp.csv' u 1:($3/$2) via c3,b3,a3
+
+TH4(n)=Linear_rate(n,s(c4)*0.1,s(a4)*20)
+#fit [1:][] TH4(x) 'herdan_hapaxes_exp.csv' u 1:($3/$2) via c4,a4
+
+# FREQUENCY-RANK
+
+stats 'zipf_tokens.csv' u 1:3 noout 
+
+n=STATS_sum_y
+
+FR1(f)=Constant_rank(f,n,s(b1))
+#fit [1:][] FR1(int(x)) 'zipf.csv' u 2:1 via b1
+
+FR2(f)=Davis_rank(f,n,s(a2)*20)
+#fit [1:][] FR2(int(x)) 'zipf.csv' u 2:1 via a2
+
+# Quadratic complexity:
+M3=100
+N3=1000
+array m_a_logistic[M3]
+array new_m_a_logistic[M3]
+array m_relative_logistic[N3]
+array m_FR3[N3]
+U3=1/((n*exp(-s(a3)*20))**s(c3)+1)
+F3=s(b3)
+G3=s(c3)
+# print "U3=",U3
+# print "G3=",G3
+coef=Logistic_C(n,s(c3),s(b3),s(a3)*20)
+m_a_logistic[1]=1
+m_relative_logistic[1]=1
+m_FR3[1]=m_relative_logistic[1]*coef
+do for [f=2:N3]{
+   # print "f=",f
+   f2=(f>M3)?M3:f
+   do for [l=1:f2]{
+      new_m_a_logistic[l]=\
+	((l>1)?(-1+F3-G3*(l-2))*m_a_logistic[l-1]:0)+\
+	((l<f2)?(f-2-F3+G3*(l-1))*m_a_logistic[l]:0)
+	# print "l=",l
+	# print "m_a_logistic[l]=",m_a_logistic[l]
+   }
+   do for [l=1:f2]{
+      m_a_logistic[l]=new_m_a_logistic[l]/(f-1)
+   }
+   poly=sum [l=0:f2-1] m_a_logistic[l+1]*U3**l
+   # if (poly==NaN) {   
+   #    print "f=",f
+   # }	 
+   m_relative_logistic[f]=m_relative_logistic[f-1]+(poly>0.0?NaN:poly)
+   # print "f=",f
+   # print "m_relative_logistic[f]=",m_relative_logistic[f]
+   m_FR3[f]=m_relative_logistic[f]*coef
+}
+
+# Slow:
+#FR3(f)=Logistic_rank_C(f,n,s(c3),s(b3),s(a3)*20)
+
+# Quadratic complexity:
+M4=110
+N4=M4
+array m_a_linear[M4]
+array new_m_a_linear[M4]
+array m_relative_linear[M4]
+array m_FR4[M4]
+U4=log(n)-s(a4)*20
+G4=s(c4)*0.1
+# print "U4=",U4
+# print "G4=",G4
+coef=Linear(n,s(c4)*0.1,s(a4)*20)
+m_a_linear[1]=1
+m_relative_linear[1]=1
+m_FR4[1]=m_relative_linear[1]*coef
+do for [f=2:M4]{
+   # print "f=",f
+   do for [l=1:f]{
+      new_m_a_linear[l]=\
+	((l>1)?G4*m_a_linear[l-1]:0)+\
+	((l<f)?(f-3)*m_a_linear[l]:0)+\
+	((l<f-1)?-l*m_a_linear[l+1]:0)
+	# print "l=",l
+	# print "m_a_linear[l]=",m_a_linear[l]
+   }
+   do for [l=1:f]{
+      m_a_linear[l]=new_m_a_linear[l]/(f-1)
+   }
+   poly=sum [l=0:f-1] m_a_linear[l+1]*U4**l
+   # if (poly==NaN) {   
+   #    print "f=",f
+   # }	 
+   m_relative_linear[f]=m_relative_linear[f-1]+(poly>0.0?NaN:poly)
+   # print "f=",f
+   # print "m_relative_linear[f]=",m_relative_linear[f]
+   m_FR4[f]=m_relative_linear[f]*coef
+}
+
+# Slow:
+#FR4(f)=Linear_rank(f,n,s(c4)*0.1,s(a4)*20)
+
+# PLOTS
+
+set output "frequency_rank.eps"
+
+set logscale xy
+set xlabel "frequency f"
+set ylabel "rank r_f"
+set key left bottom
+set title TITLE
+    
+plot [1:][1:] \
+     'zipf.csv' u 2:1 title "empirical data" w p pt 3, \
+     FR1(int(x)) title "Constant model" w l lt 1, \
+     FR2(int(x)) title "Davis model" w l lt 2, \
+     (x<=N3)?m_FR3[int(x)]:0 title "Logistic model" w l lt 3, \
+     (x<=N4)?m_FR4[int(x)]:0 title "Linear model" w l lt 4
+#     FR3(int(x)) title "Logistic model" w l lt 3, \
+#     FR4(int(x)) title "Linear model" w l lt 4
+
+set output "frequency_rank_tail.eps"
+
+#unset logscale
+set logscale xy
+set xlabel "frequency f"
+set ylabel "rank r_f"
+set key left bottom
+set title TITLE
+    
+plot [1:N4][] \
+     'zipf.csv' u 2:1 title "empirical data" w p pt 3, \
+     FR1(int(x)) title "Constant model" w l lt 1, \
+     FR2(int(x)) title "Davis model" w l lt 2, \
+     (x<=N3)?m_FR3[int(x)]:NaN title "Logistic model" w l lt 3, \
+     (x<=N4)?m_FR4[int(x)]:NaN title "Linear model" w l lt 4
+
+set output "frequency_residual.eps"
+
+unset logscale
+set logscale x
+set xlabel "frequency f"
+set ylabel "relative error of rank r_f"
+set key left top
+set title TITLE
+    
+plot [1:][-1:1] 0, \
+     'zipf.csv' u 2:(-1+FR1(int($2))/$1) title "Constant model" w l lt 1, \
+     'zipf.csv' u 2:(-1+FR2(int($2))/$1) title "Davis model" w l lt 2, \
+     'zipf.csv' u 2:(($2<=N3)?(-1+m_FR3[int($2)]/$1):NaN) title "Logistic model" w l lt 3, \
+     'zipf.csv' u 2:(($2<=N4)?(-1+m_FR4[int($2)]/$1):NaN) title "Linear model" w l lt 4
+
+set output "token_type.eps"
+
+set logscale xy
+set xlabel "# of tokens n"
+set ylabel "# of types v"
+set key left top
+set title TITLE
+    
+plot [1:][] \
+     'herdan_hapaxes.csv' u 1:2 title "incremental function" w p pt 3, \
+     'herdan_hapaxes_exp.csv' u 1:2 title "smoothed function" w l lt 5, \
+     TT1(x) title "Constant model" w l lt 1, \
+     TT2(x) title "Davis model" w l lt 2, \
+     TT3(x) title "Logistic model" w l lt 3, \
+     TT4(x) title "Linear model" w l lt 4
+
+set output "token_residual.eps"
+
+unset logscale
+set logscale x
+set xlabel "# of tokens n"
+set ylabel "relative error of smoothed # of types v"
+set key left top
+set title TITLE
+    
+plot [1:][-1:1] 0, \
+    'herdan_hapaxes_exp.csv' u 1:(-1+TT1($1)/$2) title "Constant model" w l lt 1, \
+    'herdan_hapaxes_exp.csv' u 1:(-1+TT2($1)/$2) title "Davis model" w l lt 2, \
+    'herdan_hapaxes_exp.csv' u 1:(-1+TT3($1)/$2) title "Logistic model" w l lt 3, \
+    'herdan_hapaxes_exp.csv' u 1:(-1+TT4($1)/$2) title "Linear model" w l lt 4
+
+set output "token_ratio.eps"
+
+unset logscale
+set logscale x
+set xlabel "# of tokens n"
+set ylabel "hapax rate v_1/v"
+set key left bottom
+set title TITLE
+    
+plot [1:][0.2:1] \
+     'herdan_hapaxes.csv' u 1:($3/$2) title "incremental function" w p pt 3, \
+     'herdan_hapaxes_exp.csv' u 1:($3/$2) title "smoothed function" w l lt 5, \
+     TH1(x) title "Constant model" w l lt 1, \
+     TH2(x) title "Davis model" w l lt 2, \
+     TH3(x) title "Logistic model" w l lt 3, \
+     TH4(x) title "Linear model" w l lt 4
+
+set output "token_ratio_residual.eps"
+
+unset logscale
+set logscale x
+set xlabel "# of tokens n"
+set ylabel "error of smoothed hapax rate v_1/v"
+set key left top
+set title TITLE
+    
+plot [1:][-0.5:0.5] 0, \
+    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH1($1)) title "Constant model" w l lt 1, \
+    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH2($1)) title "Davis model" w l lt 2, \
+    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH3($1)) title "Logistic model" w l lt 3, \
+    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH4($1)) title "Linear model" w l lt 4
+
+# REPORT
+
+print "Constant model:"
+print "beta=",s(b1)
+print "Davis model:"
+print "alpha=",s(a2)*20
+print "Logistic model:"
+print "gamma=",s(c3)
+print "beta=",s(b3)
+print "alpha=",s(a3)*20
+print "Linear model:"
+print "gamma=",s(c4)*0.1
+print "alpha=",s(a4)*20
+print "The number of tokens:"
+print "n=",n

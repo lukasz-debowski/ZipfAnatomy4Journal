@@ -1,0 +1,150 @@
+
+
+*******************************************************************************
+Thu Oct 19 12:15:53 2023
+
+
+FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
+        format = x:z
+        x range restricted to [1.00000 : *]
+        #datapoints = 144
+        residuals are weighted equally (unit weight)
+
+function used for fitting: TT1(x)
+	TT1(n)=Constant(n,s(b1))
+	s(r)=1/(1+abs(r))
+	Constant(n,b)=n**b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   b1           
+   0 9.2309863177e+09   0.00e+00  7.99e+02    1.000000e+00
+  15 4.5529419427e+08  -3.05e-04  7.99e-01   -3.014414e-01
+
+After 15 iterations the fit converged.
+final sum of squares of residuals : 4.55294e+08
+rel. change during last iteration : -3.05333e-09
+
+degrees of freedom    (FIT_NDF)                        : 143
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 1784.34
+variance of residuals (reduced chisquare) = WSSR/ndf   : 3.18388e+06
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+b1              = -0.301441        +/- 0.002425     (0.8043%)
+
+
+*******************************************************************************
+Thu Oct 19 12:15:53 2023
+
+
+FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
+        format = x:z
+        x range restricted to [1.00000 : *]
+        #datapoints = 144
+        residuals are weighted equally (unit weight)
+
+function used for fitting: TT2(x)
+	TT2(n)=Davis(n,s(a2)*20)
+	s(r)=1/(1+abs(r))
+	Davis(n,a)=Davis_0(n*exp(-a))/Davis_0(exp(-a))
+	Davis_0(n)=n*log(n)/(n-1)
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a2           
+   0 4.3823686003e+09   0.00e+00  8.09e+03    1.000000e+00
+   5 2.0737800599e+06  -3.44e-05  8.09e-01    6.580939e-01
+
+After 5 iterations the fit converged.
+final sum of squares of residuals : 2.07378e+06
+rel. change during last iteration : -3.44017e-10
+
+degrees of freedom    (FIT_NDF)                        : 143
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 120.424
+variance of residuals (reduced chisquare) = WSSR/ndf   : 14502
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a2              = 0.658094         +/- 0.0003529    (0.05362%)
+
+
+*******************************************************************************
+Thu Oct 19 12:15:53 2023
+
+
+FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
+        format = x:z
+        x range restricted to [1.00000 : *]
+        #datapoints = 144
+        residuals are weighted equally (unit weight)
+
+function used for fitting: TT3(x)
+	TT3(n)=Logistic_C(n,s(c3),s(b3),s(a3)*20)
+	s(r)=1/(1+abs(r))
+	Logistic_C(n,c,b,a)=Logistic_C_S(n*exp(-a),c,b)/Logistic_C_S(exp(-a),c,b)
+	Logistic_C_S(n,c,b)=Logistic_S(n,c)**(1-b)*n**b
+	Logistic_S(n,c)=(2**(1/c))*n/(n**c+1)**(1/c)
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   c3            b3            a3           
+   0 6.6452702277e+10   0.00e+00  3.73e+04    1.000000e+00   1.000000e+00   1.000000e+00
+ 345 1.9686365008e+04  -2.38e-03  3.73e-02    2.185019e+00   3.581854e+00   9.779525e-01
+
+After 345 iterations the fit converged.
+final sum of squares of residuals : 19686.4
+rel. change during last iteration : -2.38204e-08
+
+degrees of freedom    (FIT_NDF)                        : 141
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 11.8161
+variance of residuals (reduced chisquare) = WSSR/ndf   : 139.62
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+c3              = 2.18502          +/- 0.0123       (0.5629%)
+b3              = 3.58185          +/- 0.07017      (1.959%)
+a3              = 0.977952         +/- 0.006329     (0.6472%)
+
+correlation matrix of the fit parameters:
+                c3     b3     a3     
+c3              1.000 
+b3              0.988  1.000 
+a3             -0.993 -0.999  1.000 
+
+
+*******************************************************************************
+Thu Oct 19 12:15:55 2023
+
+
+FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
+        format = x:z
+        x range restricted to [1.00000 : *]
+        #datapoints = 144
+        residuals are weighted equally (unit weight)
+
+function used for fitting: TT4(x)
+	TT4(n)=Linear(n,s(c4)*0.1,s(a4)*20)
+	s(r)=1/(1+abs(r))
+	Linear(n,c,a)=Linear_0(n*exp(-a),c)/Linear_0(exp(-a),c)
+	Linear_0(n,c)=(n<1)?n:(n>exp(1/c))?sqrt(exp(1/c)):exp(log(n)-c/2.0*log(n)**2)
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   c4            a4           
+   0 2.1072666426e+12   0.00e+00  7.28e+04    1.000000e+00   1.000000e+00
+  78 2.7132038307e+05  -1.06e-04  7.28e-03    9.661979e-01   8.357805e+00
+
+After 78 iterations the fit converged.
+final sum of squares of residuals : 271320
+rel. change during last iteration : -1.05591e-09
+
+degrees of freedom    (FIT_NDF)                        : 142
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 43.7116
+variance of residuals (reduced chisquare) = WSSR/ndf   : 1910.71
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+c4              = 0.966198         +/- 0.004097     (0.424%)
+a4              = 8.35781          +/- 0.04901      (0.5864%)
+
+correlation matrix of the fit parameters:
+                c4     a4     
+c4              1.000 
+a4              0.997  1.000 

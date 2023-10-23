@@ -1,0 +1,107 @@
+#!/usr/bin/gnuplot
+
+#set terminal postscript eps enhanced color "Helvetica" 15
+set terminal postscript eps enhanced "Helvetica" 15
+
+set size ratio 0.5
+# set format xy "%2.0t{/Symbol \264}10^{%L}"
+
+in(a,b,c)=((b<a)?log(-1):1)*((b>c)?log(-1):1)
+peak(a,b,h,x)=h*((x>a)?1:0)*((x<b)?1:0)
+
+# FUNCTIONS
+
+s(r)=1/(1+abs(r))
+
+Constant(n,b)=n**b
+Davis_0(n)=n*log(n)/(n-1)
+Davis(n,a)=Davis_0(n*exp(-a))/Davis_0(exp(-a))
+Logistic_0(n)=2*n/(n+1)
+Logistic_S(n,c)=(2**(1/c))*n/(n**c+1)**(1/c)
+Logistic_C_S(n,c,b)=Logistic_S(n,c)**(1-b)*n**b
+Logistic_C(n,c,b,a)=Logistic_C_S(n*exp(-a),c,b)/Logistic_C_S(exp(-a),c,b)
+Logistic(n,c,a)=Logistic_S(n*exp(-a),c)/Logistic_S(exp(-a),c)
+Linear_0(n,c)=(n<1)?n:(n>exp(1/c))?sqrt(exp(1/c)):exp(log(n)-c/2.0*log(n)**2)
+Linear(n,c,a)=Linear_0(n*exp(-a),c)/Linear_0(exp(-a),c)
+
+M1=50
+M2=50
+binom(r,k)=exp(sum [i=1:k] log(r-i+1)-log(i))
+relative_constant(f,b)=((f<M1)?binom(f-b-1,f-1):binom(M1-b-1,M1-1)*((M1-2)/(f-1.0))**b)
+#series(r,k)=(-log(1-r)-sum [j=1:k-1] r**j/j)/r**k
+series(r,k)=(abs(r)<1)?sum [j=0:M2] r**j/(j+k):NaN
+
+a_logistic(k,l,c,b)=(l<0||l>k)?0:(k==0)?1:(-1+b-c*(l-1))*a_logistic(k-1,l-1,c,b)+(k-1-b+c*l)*a_logistic(k-1,l,c,b)
+polynomial_logistic(k,u,c,b)=sum [l=0:k] a_logistic(k,l,c,b)*u**l
+relative_logistic(f,u,c,b)=sum [k=0:f-1] (polynomial_logistic(k,u,c,b)/gamma(k+1))
+
+a_linear(k,l,c)=(l<0||l>k)?0:(k==0)?1:c*a_linear(k-1,l-1,c)+(k-2)*a_linear(k-1,l,c)-(l+1)*a_linear(k-1,l+1,c)
+polynomial_linear(k,u,c)=sum [l=0:k] a_linear(k,l,c)*u**l
+relative_linear(f,u,c)=sum [k=0:f-1] (polynomial_linear(k,u,c)/gamma(k+1))
+
+Constant_rank(f,n,b)=relative_constant(f,b)*Constant(n,b)
+Davis_rank_0(f,n)=series(1-1/n,f)
+Davis_rank(f,n,a)=Davis_rank_0(f,n*exp(-a))/Davis_0(exp(-a))
+Logistic_rank_0(f,n)=2*exp(f*log(n/(n+1)))
+Logistic_rank_S(f,n,c)=relative_logistic(f,1/(n**c+1),c,0)*Logistic_S(n,c)
+Logistic_rank(f,n,c,a)=Logistic_rank_S(f,n*exp(-a),c)/Logistic_S(exp(-a),c)
+Logistic_rank_C_S(f,n,c,b)=relative_logistic(f,1/(n**c+1),c,b)*Logistic_C_S(n,c,b)
+Logistic_rank_C(f,n,c,b,a)=Logistic_rank_C_S(f,n*exp(-a),c,b)/Logistic_C_S(exp(-a),c,b)
+Linear_rank_0(f,n,c)=relative_linear(f,log(n),c)*Linear_0(n,c)
+Linear_rank(f,n,c,a)=Linear_rank_0(f,n*exp(-a),c)/Linear_0(exp(-a),c)
+
+Constant_rate(n,b)=b
+Davis_rate_0(n)=1/log(n)-1/(n-1)
+Davis_rate(n,a)=Davis_rate_0(n*exp(-a))
+Logistic_rate_0(n)=1/(n+1)
+Logistic_rate_S(n,c)=1/(n**c+1)
+Logistic_rate(n,c,a)=Logistic_rate_S(n*exp(-a),c)
+Logistic_rate_C_S(n,c,b)=(1-b)*Logistic_rate_S(n,c)+b
+Logistic_rate_C(n,c,b,a)=Logistic_rate_C_S(n*exp(-a),c,b)
+Linear_rate_0(n,c)=(n<1)?1:(n>exp(1/c))?0:1-c*log(n)
+Linear_rate(n,c,a)=Linear_rate_0(n*exp(-a),c)
+
+# DISUSED FUNCTIONS
+
+Bell_0(u)=0.5*log(sqrt(1+u**2)+u)-0.5*log(sqrt(1+u**2)-u)
+Bell(n,c)=exp(Bell_0(c*log(n))*1/c)
+Cauchy_0(u)=atan(u)
+Cauchy(n,c)=exp(Cauchy_0(c*log(n))*1/c)
+Bell_rate_0(u)=1/sqrt(1+u**2)
+Bell_rate(n,c)=Bell_rate_0(c*log(n))
+Cauchy_rate_0(u)=1/(1+u**2)
+Cauchy_rate(n,c)=Cauchy_rate_0(c*log(n))
+
+# TOKENS-HAPAXES
+
+a1=10
+b1=1
+TH1(n,L1)=((1-L1)*Davis_rate(n,a1)*Davis(n,a1)+L1*Constant_rate(n,b1)*Constant(n,b1))/((1-L1)*Davis(n,a1)+L1*Constant(n,b1))
+
+# PLOTS
+
+set output "token_ratio.eps"
+
+unset logscale
+set logscale x
+set xlabel "# of tokens n"
+set ylabel "hapax rate v_1/v"
+set key right bottom
+    
+plot [1:10e10][0.2:1] 0.5, \
+     TH1(x,0.1) title "{/Symbol l}=0.1" w l lt 2,\
+     TH1(x,0.01) title "{/Symbol l}=0.01" w l lt 3,\
+     TH1(x,0.001) title "{/Symbol l}=0.001" w l lt 4,\
+     TH1(x,0.0001) title "{/Symbol l}=0.0001" w l lt 5
+
+
+# REPORT
+
+print "Constant model:"
+print "beta=",b1
+print "Davis model:"
+print "alpha=",a1
+
+
+
+

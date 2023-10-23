@@ -1,0 +1,195 @@
+==> herdan/00ws110_27/parameters.txt <==
+beta=0.768378827049772
+Davis model:
+alpha=12.062043375432
+Logistic model:
+gamma=0.313969831797711
+beta=0.218252270012348
+alpha=10.1114662764237
+Linear model:
+gamma=0.0508595814532533
+alpha=2.13725333012555
+The number of tokens:
+n=835726.0
+
+==> herdan/1ours10_27/parameters.txt <==
+beta=0.79674769231716
+Davis model:
+alpha=11.549332852221
+Logistic model:
+gamma=0.318491109048611
+beta=0.202510245295746
+alpha=9.71944546008898
+Linear model:
+gamma=0.0506909004611588
+alpha=1.70447453526842
+The number of tokens:
+n=128963.0
+
+==> herdan/2000010_27/parameters.txt <==
+beta=0.80076419254685
+Davis model:
+alpha=11.476198622999
+Logistic model:
+gamma=0.323002254363711
+beta=0.00753762749348954
+alpha=10.6205683284162
+Linear model:
+gamma=0.0577612934232328
+alpha=2.21912221243879
+The number of tokens:
+n=101247.0
+
+==> herdan/2cahe10_27/parameters.txt <==
+beta=0.79584552166512
+Davis model:
+alpha=12.1214364197935
+Logistic model:
+gamma=0.313888040484893
+beta=0.000211849440207249
+alpha=11.3838584374339
+Linear model:
+gamma=0.0576330034047029
+alpha=2.78795454394301
+The number of tokens:
+n=298339.0
+
+==> herdan/5wiab10_27/parameters.txt <==
+beta=0.808175990705688
+Davis model:
+alpha=11.6402554506841
+Logistic model:
+gamma=0.314766365118392
+beta=0.000897641882953612
+alpha=10.8568750030924
+Linear model:
+gamma=0.0551994190099358
+alpha=2.13446096828954
+The number of tokens:
+n=92558.0
+
+==> herdan/800lg10_27/parameters.txt <==
+beta=0.799350260633715
+Davis model:
+alpha=11.431758807963
+Logistic model:
+gamma=0.327024137042631
+beta=0.162225788396297
+alpha=9.77033766688445
+Linear model:
+gamma=0.0534003290727632
+alpha=1.84093230171372
+The number of tokens:
+n=95493.0
+
+==> herdan/csnva10_27/parameters.txt <==
+beta=0.731942313986495
+Davis model:
+alpha=11.3855878496472
+Logistic model:
+gamma=0.308202517073064
+beta=0.157022379556537
+alpha=9.93738557317487
+Linear model:
+gamma=0.0542254592987027
+alpha=1.87427877205561
+The number of tokens:
+n=1268149.0
+
+==> herdan/dbrry10_27/parameters.txt <==
+beta=0.786730230488172
+Davis model:
+alpha=11.3922870091182
+Logistic model:
+gamma=0.325408801646627
+beta=0.0649257138692811
+alpha=10.3107023771157
+Linear model:
+gamma=0.0582598262016476
+alpha=2.23093407393037
+The number of tokens:
+n=159710.0
+
+==> herdan/dscmn10_27/parameters.txt <==
+beta=0.773889341681754
+Davis model:
+alpha=11.4990385154657
+Logistic model:
+gamma=0.32807503357751
+beta=0.000127961626724241
+alpha=10.7472590299804
+Linear model:
+gamma=0.0629075034892989
+alpha=2.70684789527145
+The number of tokens:
+n=312075.0
+
+==> herdan/gltrv10_27/parameters.txt <==
+beta=0.796031469923344
+Davis model:
+alpha=11.4001407330771
+Logistic model:
+gamma=0.321933748574908
+beta=0.000699432202031873
+alpha=10.6168770773575
+Linear model:
+gamma=0.0583833371020313
+alpha=2.21799718418017
+The number of tokens:
+n=104909.0
+
+==> herdan/milnd10_27/parameters.txt <==
+beta=0.772686853306847
+Davis model:
+alpha=11.1370999745622
+Logistic model:
+gamma=0.346731667759065
+beta=0.126676086142466
+alpha=9.6270165765206
+Linear model:
+gamma=0.060805979517955
+alpha=2.23886558811699
+The number of tokens:
+n=195064.0
+
+==> herdan/mt7bg10_27/parameters.txt <==
+beta=0.774698963818252
+Davis model:
+alpha=11.9111202037892
+Logistic model:
+gamma=0.29605366265585
+beta=0.000925186886386404
+alpha=11.4504332294482
+Linear model:
+gamma=0.0565196144284366
+alpha=2.55456493612433
+The number of tokens:
+n=519886.0
+
+==> herdan/stlla10_27/parameters.txt <==
+beta=0.756854777548524
+Davis model:
+alpha=10.9128694504044
+Logistic model:
+gamma=0.332957613269577
+beta=0.231446576732768
+alpha=8.87286584561475
+Linear model:
+gamma=0.0536251625631474
+alpha=1.45200895823313
+The number of tokens:
+n=245882.0
+
+==> herdan/wmcry10_27/parameters.txt <==
+beta=0.799279544156269
+Davis model:
+alpha=11.6940538220964
+Logistic model:
+gamma=0.314450603825004
+beta=0.000258509919821908
+alpha=10.961488599845
+Linear model:
+gamma=0.0567401103135371
+alpha=2.33524342932221
+The number of tokens:
+n=145487.0

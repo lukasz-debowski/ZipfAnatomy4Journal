@@ -1,0 +1,12 @@
+\begin{thebibliography}{1}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Project Gutenberg()]{Gutenberg11}
+Project Gutenberg, (n.d.).
+\newblock Retrieved May 25, 2011, from \url{https://www.gutenberg.org/}.
+
+\end{thebibliography}
