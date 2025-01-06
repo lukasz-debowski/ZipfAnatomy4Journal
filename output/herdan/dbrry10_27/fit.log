@@ -1,7 +1,7 @@
 
 
 *******************************************************************************
-Thu Oct 19 12:17:14 2023
+Wed Nov 20 19:26:01 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -34,7 +34,7 @@ b1              = 0.271084         +/- 0.002657     (0.9801%)
 
 
 *******************************************************************************
-Thu Oct 19 12:17:14 2023
+Wed Nov 20 19:26:01 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -44,19 +44,19 @@ FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
         residuals are weighted equally (unit weight)
 
 function used for fitting: TT2(x)
-	TT2(n)=Davis(n,s(a2)*20)
+	TT2(n)=Cancelation(n,s(a2)*20)
 	s(r)=1/(1+abs(r))
-	Davis(n,a)=Davis_0(n*exp(-a))/Davis_0(exp(-a))
-	Davis_0(n)=n*log(n)/(n-1)
+	Cancelation(n,a)=Cancelation_0(n*exp(-a))/Cancelation_0(exp(-a))
+	Cancelation_0(n)=n*log(n)/(n-1)
 fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   a2           
    0 2.2320618991e+08   0.00e+00  3.78e+03    1.000000e+00
-   5 1.9676720627e+06   0.00e+00  3.78e+08    7.555737e-01
+   5 1.9676720627e+06  -1.06e-10  3.78e+07    7.555737e-01
 
 After 5 iterations the fit converged.
 final sum of squares of residuals : 1.96767e+06
-rel. change during last iteration : 0
+rel. change during last iteration : -1.06495e-15
 
 degrees of freedom    (FIT_NDF)                        : 125
 rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 125.465
@@ -68,7 +68,7 @@ a2              = 0.755574         +/- 0.001519     (0.2011%)
 
 
 *******************************************************************************
-Thu Oct 19 12:17:14 2023
+Wed Nov 20 19:26:01 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -111,7 +111,7 @@ a3             -0.994 -0.999  1.000
 
 
 *******************************************************************************
-Thu Oct 19 12:17:19 2023
+Wed Nov 20 19:26:06 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2

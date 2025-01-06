@@ -88,7 +88,7 @@
 %   were sampled blindly from a given longer text. The second assumption
 %   posits that the rate of hapaxes is a simple function of the text
 %   size. Four such functions are discussed: the constant model, the
-%   Davis model, the linear model, and the logistic model. It is shown
+%   cancelation model, the linear model, and the logistic model. It is shown
 %   that the logistic model yields the best fit. This report contains
 %   all tables, all plots, and an instruction for rerunning the
 %   numerical experiment.
@@ -107,7 +107,7 @@ first one is the standard urn model which predicts that marginal
 frequency distributions for shorter texts look as if word tokens were
 sampled blindly from a given longer text. The second assumption posits
 that the rate of hapaxes is a simple function of the text size. Four
-such functions are discussed: the constant model, the Davis model, the
+such functions are discussed: the constant model, the cancelation model, the
 linear model, and the logistic model.  This report contains all
 tables, all plots, and an instruction for rerunning the numerical
 experiment.
@@ -172,8 +172,8 @@ make_parameters_herdan_2.pl.
   \includegraphics[width=\columnwidth]{output/token_ratio.pdf}
   %\vspace{-4em}
   \caption{The $U$-shaped hapax rate function for a mixture of the
-    Davis model with $\alpha=10$ and the maximal model. The weight of
-    the Davis model is $(1-\lambda)$ and the weight of the maximal
+    cancelation model with $\alpha=10$ and the maximal model. The weight of
+    the cancelation model is $(1-\lambda)$ and the weight of the maximal
     model is $\lambda$. \label{figHapaxU}}
 \end{figure}
 
@@ -185,7 +185,7 @@ make_parameters_herdan_2.pl.
   \footnotesize
   \begin{tabular}{|l|l|l|lll|ll|r|}
     \toprule
-    File & Constant & Davis
+    File & Constant & Cancelation
     & \multicolumn{3}{c|}{Logistic}
     & \multicolumn{2}{c|}{Linear} & Length\\
     \cline{2-2}\cline{3-3}\cline{4-6}\cline{7-8}
@@ -221,7 +221,7 @@ Mean    & 0.783 & 11.54 & 0.32  & 0.084 & 10.36 & 0.0562        & 2.17  & 321678
   \medskip
   \begin{tabular}{|l|r|r|r|r|}
     \toprule
-File    & Constant      & Davis & Logistic      & Linear\\
+File    & Constant      & Cancelation & Logistic      & Linear\\
 \midrule
 00ws110.txt     & 1784.34       & 120.42        & \textbf{11.82}        & 43.71\\
 1ours10.txt     & 478.53        & 74.39 & \textbf{7.02} & 16.69\\

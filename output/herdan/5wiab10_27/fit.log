@@ -1,7 +1,7 @@
 
 
 *******************************************************************************
-Thu Oct 19 12:16:42 2023
+Wed Nov 20 19:25:29 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -34,7 +34,7 @@ b1              = 0.237354         +/- 0.002323     (0.9786%)
 
 
 *******************************************************************************
-Thu Oct 19 12:16:42 2023
+Wed Nov 20 19:25:29 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -44,10 +44,10 @@ FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
         residuals are weighted equally (unit weight)
 
 function used for fitting: TT2(x)
-	TT2(n)=Davis(n,s(a2)*20)
+	TT2(n)=Cancelation(n,s(a2)*20)
 	s(r)=1/(1+abs(r))
-	Davis(n,a)=Davis_0(n*exp(-a))/Davis_0(exp(-a))
-	Davis_0(n)=n*log(n)/(n-1)
+	Cancelation(n,a)=Cancelation_0(n*exp(-a))/Cancelation_0(exp(-a))
+	Cancelation_0(n)=n*log(n)/(n-1)
 fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   a2           
@@ -68,7 +68,7 @@ a2              = 0.718175         +/- 0.0019       (0.2646%)
 
 
 *******************************************************************************
-Thu Oct 19 12:16:42 2023
+Wed Nov 20 19:25:29 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -87,11 +87,11 @@ fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   c3            b3            a3           
    0 3.0341676591e+09   0.00e+00  6.65e+03    1.000000e+00   1.000000e+00   1.000000e+00
-1867 2.0102376398e+03  -9.66e-01  6.65e-04    2.176960e+00   1.113030e+03   8.421507e-01
+1867 2.0102376399e+03  -9.65e-01  6.65e-04    2.176960e+00   1.113030e+03   8.421507e-01
 
 After 1867 iterations the fit converged.
 final sum of squares of residuals : 2010.24
-rel. change during last iteration : -9.65502e-06
+rel. change during last iteration : -9.655e-06
 
 degrees of freedom    (FIT_NDF)                        : 117
 rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 4.14506
@@ -111,7 +111,7 @@ a3             -0.995 -0.999  1.000
 
 
 *******************************************************************************
-Thu Oct 19 12:16:52 2023
+Wed Nov 20 19:25:38 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2

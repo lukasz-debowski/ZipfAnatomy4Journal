@@ -1,7 +1,7 @@
 
 
 *******************************************************************************
-Thu Oct 19 12:16:02 2023
+Wed Nov 20 19:24:50 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -34,7 +34,7 @@ b1              = 0.255102         +/- 0.002229     (0.8737%)
 
 
 *******************************************************************************
-Thu Oct 19 12:16:02 2023
+Wed Nov 20 19:24:50 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -44,19 +44,19 @@ FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
         residuals are weighted equally (unit weight)
 
 function used for fitting: TT2(x)
-	TT2(n)=Davis(n,s(a2)*20)
+	TT2(n)=Cancelation(n,s(a2)*20)
 	s(r)=1/(1+abs(r))
-	Davis(n,a)=Davis_0(n*exp(-a))/Davis_0(exp(-a))
-	Davis_0(n)=n*log(n)/(n-1)
+	Cancelation(n,a)=Cancelation_0(n*exp(-a))/Cancelation_0(exp(-a))
+	Cancelation_0(n)=n*log(n)/(n-1)
 fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   a2           
    0 2.2232144521e+08   0.00e+00  3.42e+03    1.000000e+00
-   5 6.8073995456e+05  -3.93e-10  3.42e+07    7.317018e-01
+   5 6.8073995456e+05   0.00e+00  3.42e+07    7.317018e-01
 
 After 5 iterations the fit converged.
 final sum of squares of residuals : 680740
-rel. change during last iteration : -3.9333e-15
+rel. change during last iteration : 0
 
 degrees of freedom    (FIT_NDF)                        : 123
 rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 74.394
@@ -68,7 +68,7 @@ a2              = 0.731702         +/- 0.0009756    (0.1333%)
 
 
 *******************************************************************************
-Thu Oct 19 12:16:02 2023
+Wed Nov 20 19:24:50 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -111,7 +111,7 @@ a3             -0.995 -0.999  1.000
 
 
 *******************************************************************************
-Thu Oct 19 12:16:04 2023
+Wed Nov 20 19:24:53 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -129,11 +129,11 @@ fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   c4            a4           
    0 6.4066550968e+10   0.00e+00  6.06e+03    1.000000e+00   1.000000e+00
- 151 3.3986638610e+04  -3.26e-04  6.06e-03    9.727407e-01   1.073382e+01
+ 150 3.3986638610e+04  -3.13e-04  6.06e-03    9.727407e-01   1.073382e+01
 
-After 151 iterations the fit converged.
+After 150 iterations the fit converged.
 final sum of squares of residuals : 33986.6
-rel. change during last iteration : -3.25989e-09
+rel. change during last iteration : -3.13008e-09
 
 degrees of freedom    (FIT_NDF)                        : 122
 rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 16.6907

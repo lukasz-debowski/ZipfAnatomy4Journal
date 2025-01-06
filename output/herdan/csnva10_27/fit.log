@@ -1,7 +1,7 @@
 
 
 *******************************************************************************
-Thu Oct 19 12:17:08 2023
+Wed Nov 20 19:25:55 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -34,7 +34,7 @@ b1              = 0.366228         +/- 0.003052     (0.8334%)
 
 
 *******************************************************************************
-Thu Oct 19 12:17:08 2023
+Wed Nov 20 19:25:55 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -44,19 +44,19 @@ FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
         residuals are weighted equally (unit weight)
 
 function used for fitting: TT2(x)
-	TT2(n)=Davis(n,s(a2)*20)
+	TT2(n)=Cancelation(n,s(a2)*20)
 	s(r)=1/(1+abs(r))
-	Davis(n,a)=Davis_0(n*exp(-a))/Davis_0(exp(-a))
-	Davis_0(n)=n*log(n)/(n-1)
+	Cancelation(n,a)=Cancelation_0(n*exp(-a))/Cancelation_0(exp(-a))
+	Cancelation_0(n)=n*log(n)/(n-1)
 fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   a2           
    0 2.0446413795e+09   0.00e+00  9.28e+03    1.000000e+00
-   4 1.7138478709e+06  -1.63e-10  9.28e+06    7.566067e-01
+   4 1.7138478709e+06   0.00e+00  9.28e+08    7.566067e-01
 
 After 4 iterations the fit converged.
 final sum of squares of residuals : 1.71385e+06
-rel. change during last iteration : -1.63023e-15
+rel. change during last iteration : 0
 
 degrees of freedom    (FIT_NDF)                        : 147
 rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 107.976
@@ -68,7 +68,7 @@ a2              = 0.756607         +/- 0.0003756    (0.04964%)
 
 
 *******************************************************************************
-Thu Oct 19 12:17:08 2023
+Wed Nov 20 19:25:55 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -91,7 +91,7 @@ iter      chisq       delta/lim  lambda   c3            b3            a3
 
 After 10 iterations the fit converged.
 final sum of squares of residuals : 6827.44
-rel. change during last iteration : -2.97327e-09
+rel. change during last iteration : -2.97333e-09
 
 degrees of freedom    (FIT_NDF)                        : 145
 rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 6.86191
@@ -111,7 +111,7 @@ a3             -0.992 -0.999  1.000
 
 
 *******************************************************************************
-Thu Oct 19 12:17:08 2023
+Wed Nov 20 19:25:55 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2

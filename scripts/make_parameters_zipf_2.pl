@@ -30,7 +30,7 @@ my ($MConstant,
 my $r;
 my $rs;
 for $r (sort @records){
-    if($r=~m|^herdan\/(\S+)_27\/parameters\.txt <==[^=]+beta= (\S+)[^=]+alpha= (\S+)[^=]+gamma= (\S+)[^=]+beta= (\S+)[^=]+alpha= (\S+)[^=]+gamma= (\S+)[^=]+alpha= (\S+)[^=]+n= (\S+)|){
+    if($r=~m|^zipf\/(\S+)/parameters\.txt <==[^=]+beta= (\S+)[^=]+alpha= (\S+)[^=]+gamma= (\S+)[^=]+beta= (\S+)[^=]+alpha= (\S+)[^=]+gamma= (\S+)[^=]+alpha= (\S+)[^=]+n= (\S+)|){
 	my ($text,
 	    $Constant,
 	    $Cancelation,
@@ -38,7 +38,7 @@ for $r (sort @records){
 	    $LinearG,$LinearA,
 	    $n)=
 	    ($1,$2,$3,$4,$5,$6,$7,$8,$9);
-	print join("\t& ","$text.txt",
+	print join("\t& ","$text",
 		   round(0.001,$Constant),
 		   round(0.01,$Cancelation),
 		   round(0.001,$LogisticG),round(0.001,$LogisticB),round(0.01,$LogisticA),

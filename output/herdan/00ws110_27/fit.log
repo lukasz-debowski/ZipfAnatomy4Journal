@@ -1,7 +1,7 @@
 
 
 *******************************************************************************
-Thu Oct 19 12:15:53 2023
+Wed Nov 20 19:24:40 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -34,7 +34,7 @@ b1              = -0.301441        +/- 0.002425     (0.8043%)
 
 
 *******************************************************************************
-Thu Oct 19 12:15:53 2023
+Wed Nov 20 19:24:40 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -44,10 +44,10 @@ FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
         residuals are weighted equally (unit weight)
 
 function used for fitting: TT2(x)
-	TT2(n)=Davis(n,s(a2)*20)
+	TT2(n)=Cancelation(n,s(a2)*20)
 	s(r)=1/(1+abs(r))
-	Davis(n,a)=Davis_0(n*exp(-a))/Davis_0(exp(-a))
-	Davis_0(n)=n*log(n)/(n-1)
+	Cancelation(n,a)=Cancelation_0(n*exp(-a))/Cancelation_0(exp(-a))
+	Cancelation_0(n)=n*log(n)/(n-1)
 fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   a2           
@@ -56,7 +56,7 @@ iter      chisq       delta/lim  lambda   a2
 
 After 5 iterations the fit converged.
 final sum of squares of residuals : 2.07378e+06
-rel. change during last iteration : -3.44017e-10
+rel. change during last iteration : -3.44016e-10
 
 degrees of freedom    (FIT_NDF)                        : 143
 rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 120.424
@@ -68,7 +68,7 @@ a2              = 0.658094         +/- 0.0003529    (0.05362%)
 
 
 *******************************************************************************
-Thu Oct 19 12:15:53 2023
+Wed Nov 20 19:24:40 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -111,7 +111,7 @@ a3             -0.993 -0.999  1.000
 
 
 *******************************************************************************
-Thu Oct 19 12:15:55 2023
+Wed Nov 20 19:24:43 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -133,7 +133,7 @@ iter      chisq       delta/lim  lambda   c4            a4
 
 After 78 iterations the fit converged.
 final sum of squares of residuals : 271320
-rel. change during last iteration : -1.05591e-09
+rel. change during last iteration : -1.05607e-09
 
 degrees of freedom    (FIT_NDF)                        : 142
 rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 43.7116

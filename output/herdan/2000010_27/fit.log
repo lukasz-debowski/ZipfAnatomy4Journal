@@ -1,7 +1,7 @@
 
 
 *******************************************************************************
-Thu Oct 19 12:16:11 2023
+Wed Nov 20 19:24:59 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -34,7 +34,7 @@ b1              = 0.248807         +/- 0.0025       (1.005%)
 
 
 *******************************************************************************
-Thu Oct 19 12:16:11 2023
+Wed Nov 20 19:24:59 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -44,10 +44,10 @@ FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
         residuals are weighted equally (unit weight)
 
 function used for fitting: TT2(x)
-	TT2(n)=Davis(n,s(a2)*20)
+	TT2(n)=Cancelation(n,s(a2)*20)
 	s(r)=1/(1+abs(r))
-	Davis(n,a)=Davis_0(n*exp(-a))/Davis_0(exp(-a))
-	Davis_0(n)=n*log(n)/(n-1)
+	Cancelation(n,a)=Cancelation_0(n*exp(-a))/Cancelation_0(exp(-a))
+	Cancelation_0(n)=n*log(n)/(n-1)
 fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   a2           
@@ -68,7 +68,7 @@ a2              = 0.742737         +/- 0.001961     (0.264%)
 
 
 *******************************************************************************
-Thu Oct 19 12:16:11 2023
+Wed Nov 20 19:24:59 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2
@@ -111,7 +111,7 @@ a3             -0.995 -0.999  1.000
 
 
 *******************************************************************************
-Thu Oct 19 12:16:22 2023
+Wed Nov 20 19:25:09 2024
 
 
 FIT:    data read from 'herdan_hapaxes_exp.csv' u 1:2

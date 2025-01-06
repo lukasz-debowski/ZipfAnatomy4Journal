@@ -22,8 +22,8 @@ for $r (sort @records){
     #print $r;
     my (@list)=split m|\*\*\*+|, $r;
     my @out;
-    if($list[0]=~m|^herdan\/(\S+)_27\/fit\.log <==|){
-	$out[0]=$1.".txt";
+    if($list[0]=~m|^zipf\/(\S+)\/fit\.log <==|){
+	$out[0]=$1;
     }
     my $i;
     for $i (1..4){

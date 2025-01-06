@@ -14,8 +14,8 @@ peak(a,b,h,x)=h*((x>a)?1:0)*((x<b)?1:0)
 s(r)=1/(1+abs(r))
 
 Constant(n,b)=n**b
-Davis_0(n)=n*log(n)/(n-1)
-Davis(n,a)=Davis_0(n*exp(-a))/Davis_0(exp(-a))
+Cancelation_0(n)=n*log(n)/(n-1)
+Cancelation(n,a)=Cancelation_0(n*exp(-a))/Cancelation_0(exp(-a))
 Logistic_0(n)=2*n/(n+1)
 Logistic_S(n,c)=(2**(1/c))*n/(n**c+1)**(1/c)
 Logistic_C_S(n,c,b)=Logistic_S(n,c)**(1-b)*n**b
@@ -40,8 +40,8 @@ polynomial_linear(k,u,c)=sum [l=0:k] a_linear(k,l,c)*u**l
 relative_linear(f,u,c)=sum [k=0:f-1] (polynomial_linear(k,u,c)/gamma(k+1))
 
 Constant_rank(f,n,b)=relative_constant(f,b)*Constant(n,b)
-Davis_rank_0(f,n)=series(1-1/n,f)
-Davis_rank(f,n,a)=Davis_rank_0(f,n*exp(-a))/Davis_0(exp(-a))
+Cancelation_rank_0(f,n)=series(1-1/n,f)
+Cancelation_rank(f,n,a)=Cancelation_rank_0(f,n*exp(-a))/Cancelation_0(exp(-a))
 Logistic_rank_0(f,n)=2*exp(f*log(n/(n+1)))
 Logistic_rank_S(f,n,c)=relative_logistic(f,1/(n**c+1),c,0)*Logistic_S(n,c)
 Logistic_rank(f,n,c,a)=Logistic_rank_S(f,n*exp(-a),c)/Logistic_S(exp(-a),c)
@@ -51,8 +51,8 @@ Linear_rank_0(f,n,c)=relative_linear(f,log(n),c)*Linear_0(n,c)
 Linear_rank(f,n,c,a)=Linear_rank_0(f,n*exp(-a),c)/Linear_0(exp(-a),c)
 
 Constant_rate(n,b)=b
-Davis_rate_0(n)=1/log(n)-1/(n-1)
-Davis_rate(n,a)=Davis_rate_0(n*exp(-a))
+Cancelation_rate_0(n)=1/log(n)-1/(n-1)
+Cancelation_rate(n,a)=Cancelation_rate_0(n*exp(-a))
 Logistic_rate_0(n)=1/(n+1)
 Logistic_rate_S(n,c)=1/(n**c+1)
 Logistic_rate(n,c,a)=Logistic_rate_S(n*exp(-a),c)
@@ -76,7 +76,7 @@ Cauchy_rate(n,c)=Cauchy_rate_0(c*log(n))
 
 a1=10
 b1=1
-TH1(n,L1)=((1-L1)*Davis_rate(n,a1)*Davis(n,a1)+L1*Constant_rate(n,b1)*Constant(n,b1))/((1-L1)*Davis(n,a1)+L1*Constant(n,b1))
+TH1(n,L1)=((1-L1)*Cancelation_rate(n,a1)*Cancelation(n,a1)+L1*Constant_rate(n,b1)*Constant(n,b1))/((1-L1)*Cancelation(n,a1)+L1*Constant(n,b1))
 
 # PLOTS
 
@@ -85,7 +85,7 @@ set output "token_ratio.eps"
 unset logscale
 set logscale x
 set xlabel "# of tokens n"
-set ylabel "hapax rate v_1/v"
+set ylabel "hapax rate h(log n)"
 set key right bottom
     
 plot [1:10e10][0.2:1] 0.5, \
@@ -99,7 +99,7 @@ plot [1:10e10][0.2:1] 0.5, \
 
 print "Constant model:"
 print "beta=",b1
-print "Davis model:"
+print "Cancelation model:"
 print "alpha=",a1
 
 

@@ -1,21 +1,22 @@
 #!/bin/bash
 
-cd herdan
+cd zipf
 for i in *
 do
     echo $i
     cd $i
 
-    # The input files are zipf.csv and herdan_hapaxes.csv
+    # The input file is spectrum.csv
     
+    ../../make_rank.pl < spectrum.csv > zipf.csv
+    ../../make_rank_sparse.pl < spectrum.csv > zipf_sparse.csv
     # tail -n 10 zipf.csv > zipf_tail.csv
     ../../make_tokens.pl < zipf.csv > zipf_tokens.csv
-    ../../TypeToken/TT_fof.pl < zipf.csv > spectrum.csv
-    ../../make_rank_sparse.pl < spectrum.csv > zipf_sparse.csv
+    # ../../TypeToken/TT_fof.pl < zipf.csv > spectrum.csv
     ../../TypeToken/TT_growth_short_hapaxes_expected.pl < spectrum.csv > herdan_hapaxes_exp.csv
     
     rm -f fit.log
-    ../../make_combination_herdan.gpl 2> parameters.txt
+    ../../make_combination_zipf.gpl 2> parameters.txt
 
     epstopdf token_type.eps token_type.pdf
     epstopdf token_residual.eps token_residual.pdf
@@ -29,7 +30,7 @@ do
 done
 cd ..
 
-tail -n 150 herdan/*/fit.log > fitlog_herdan.txt
- ./make_parameters_herdan_1.pl < fitlog_herdan.txt
-tail -n 12 herdan/*/parameters.txt > parameters_herdan.txt
- ./make_parameters_herdan_2.pl < parameters_herdan.txt
+tail -n 150 zipf/*/fit.log > fitlog_zipf.txt
+ ./make_parameters_zipf_1.pl < fitlog_zipf.txt
+tail -n 12 zipf/*/parameters.txt > parameters_zipf.txt
+ ./make_parameters_zipf_2.pl < parameters_zipf.txt

@@ -1,10 +1,10 @@
 #!/usr/bin/gnuplot
 
 # This script is called by script
-# ./make_combination_herdan.bash
+# ./make_combination_zipf.bash
 
 #TITLE = GPVAL_PWD
-TITLE = "`pwd | perl -pe "s|.*\/(.*)_27$|\1.txt|;"`"
+TITLE = "`pwd | perl -pe "s|.*\/(.*)$|\1|;"`"
 
 print TITLE
 
@@ -214,17 +214,17 @@ set output "frequency_rank.eps"
 set logscale xy
 set xlabel "frequency f"
 set ylabel "rank r_f"
-set key left bottom
+set key right top
 set title TITLE
     
 plot [1:][1:] \
-     'zipf.csv' u 2:1 title "empirical rank function" w p pt 3, \
-     FR1(int(x)) title "constant model" w l lt 1, \
-     FR2(int(x)) title "cancelation model" w l lt 2, \
-     (x<=N3)?m_FR3[int(x)]:0 title "logistic model" w l lt 3, \
-     (x<=N4)?m_FR4[int(x)]:0 title "linear model" w l lt 4
-#     FR3(int(x)) title "logistic model" w l lt 3, \
-#     FR4(int(x)) title "linear model" w l lt 4
+     'zipf_sparse.csv' u 2:1 title "empirical rank function" w p pt 3, \
+     FR1(int(x)) title "Constant model" w l lt 1, \
+     FR2(int(x)) title "Cancelation model" w l lt 2, \
+     (x<=N3)?m_FR3[int(x)]:0 title "Logistic model" w l lt 3, \
+     (x<=N4)?m_FR4[int(x)]:0 title "Linear model" w l lt 4
+#     FR3(int(x)) title "Logistic model" w l lt 3, \
+#     FR4(int(x)) title "Linear model" w l lt 4
 
 set output "frequency_rank_tail.eps"
 
@@ -232,15 +232,15 @@ set output "frequency_rank_tail.eps"
 set logscale xy
 set xlabel "frequency f"
 set ylabel "rank r_f"
-set key left bottom
+set key right top
 set title TITLE
     
 plot [1:N4][] \
-     'zipf.csv' u 2:1 title "empirical rank function" w p pt 3, \
-     FR1(int(x)) title "constant model" w l lt 1, \
-     FR2(int(x)) title "cancelation model" w l lt 2, \
-     (x<=N3)?m_FR3[int(x)]:NaN title "logistic model" w l lt 3, \
-     (x<=N4)?m_FR4[int(x)]:NaN title "linear model" w l lt 4
+     'zipf_sparse.csv' u 2:1 title "empirical rank function" w p pt 3, \
+     FR1(int(x)) title "Constant model" w l lt 1, \
+     FR2(int(x)) title "Cancelation model" w l lt 2, \
+     (x<=N3)?m_FR3[int(x)]:NaN title "Logistic model" w l lt 3, \
+     (x<=N4)?m_FR4[int(x)]:NaN title "Linear model" w l lt 4
 
 set output "frequency_residual.eps"
 
@@ -248,77 +248,75 @@ unset logscale
 set logscale x
 set xlabel "frequency f"
 set ylabel "relative error of rank r_f/r^*_f-1"
-set key left top
+set key right top
 set title TITLE
     
 plot [1:][-1:1] 0, \
-     'zipf.csv' u 2:(-1+FR1(int($2))/$1) title "constant model" w l lt 1, \
-     'zipf.csv' u 2:(-1+FR2(int($2))/$1) title "cancelation model" w l lt 2, \
-     'zipf.csv' u 2:(($2<=N3)?(-1+m_FR3[int($2)]/$1):NaN) title "logistic model" w l lt 3, \
-     'zipf.csv' u 2:(($2<=N4)?(-1+m_FR4[int($2)]/$1):NaN) title "linear model" w l lt 4
+     'zipf_sparse.csv' u 2:(-1+FR1(int($2))/$1) title "Constant model" w l lt 1, \
+     'zipf_sparse.csv' u 2:(-1+FR2(int($2))/$1) title "Cancelation model" w l lt 2, \
+     'zipf_sparse.csv' u 2:(($2<=N3)?(-1+m_FR3[int($2)]/$1):NaN) title "Logistic model" w l lt 3, \
+     'zipf_sparse.csv' u 2:(($2<=N4)?(-1+m_FR4[int($2)]/$1):NaN) title "Linear model" w l lt 4
 
 set output "token_type.eps"
 
 set logscale xy
 set xlabel "# of tokens n"
-set ylabel "# of types g(n)"
-set key left top
+set ylabel "# of types v"
+set key right bottom
 set title TITLE
     
 plot [1:][] \
-     'herdan_hapaxes.csv' u 1:2 title "incremental # of types" w p pt 3, \
      'herdan_hapaxes_exp.csv' u 1:2 title "smoothed # of types" w l lt 5, \
-     TT1(x) title "constant model" w l lt 1, \
-     TT2(x) title "cancelation model" w l lt 2, \
-     TT3(x) title "logistic model" w l lt 3, \
-     TT4(x) title "linear model" w l lt 4
+     TT1(x) title "Constant model" w l lt 1, \
+     TT2(x) title "Cancelation model" w l lt 2, \
+     TT3(x) title "Logistic model" w l lt 3, \
+     TT4(x) title "Linear model" w l lt 4
 
 set output "token_residual.eps"
 
 unset logscale
 set logscale x
 set xlabel "# of tokens n"
-set ylabel "relative error of # of types g(n)/g^*(n)-1"
-set key left top
+set ylabel "relative error of smoothed # of types v"
+set key right top
 set title TITLE
     
 plot [1:][-1:1] 0, \
-    'herdan_hapaxes_exp.csv' u 1:(-1+TT1($1)/$2) title "constant model" w l lt 1, \
-    'herdan_hapaxes_exp.csv' u 1:(-1+TT2($1)/$2) title "cancelation model" w l lt 2, \
-    'herdan_hapaxes_exp.csv' u 1:(-1+TT3($1)/$2) title "logistic model" w l lt 3, \
-    'herdan_hapaxes_exp.csv' u 1:(-1+TT4($1)/$2) title "linear model" w l lt 4
+    'herdan_hapaxes_exp.csv' u 1:(-1+TT1($1)/$2) title "Constant model" w l lt 1, \
+    'herdan_hapaxes_exp.csv' u 1:(-1+TT2($1)/$2) title "Cancelation model" w l lt 2, \
+    'herdan_hapaxes_exp.csv' u 1:(-1+TT3($1)/$2) title "Logistic model" w l lt 3, \
+    'herdan_hapaxes_exp.csv' u 1:(-1+TT4($1)/$2) title "Linear model" w l lt 4
 
 set output "token_ratio.eps"
 
 unset logscale
 set logscale x
 set xlabel "# of tokens n"
-set ylabel "hapax rate h(log n)"
-set key left bottom
+set ylabel "hapax rate v_1/v"
+set key right top
 set title TITLE
     
-plot [1:][0.2:1] \
-     'herdan_hapaxes.csv' u 1:($3/$2) title "incremental hapax rate" w p pt 3, \
+plot [1:][0.2:1] 0.5, \
      'herdan_hapaxes_exp.csv' u 1:($3/$2) title "smoothed hapax rate" w l lt 5, \
-     TH1(x) title "constant model" w l lt 1, \
-     TH2(x) title "cancelation model" w l lt 2, \
-     TH3(x) title "logistic model" w l lt 3, \
-     TH4(x) title "linear model" w l lt 4
+     TH1(x) title "Constant model" w l lt 1, \
+     TH2(x) title "Cancelation model" w l lt 2, \
+     TH3(x) title "Logistic model" w l lt 3, \
+     TH4(x) title "Linear model" w l lt 4
 
 set output "token_ratio_residual.eps"
 
 unset logscale
 set logscale x
 set xlabel "# of tokens n"
-set ylabel "error of hapax rate h(log n)-h^*(log n)"
-set key left top
+set ylabel "error of smoothed hapax rate v_1/v"
+set key right top
 set title TITLE
     
 plot [1:][-0.5:0.5] 0, \
-    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH1($1)) title "constant model" w l lt 1, \
-    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH2($1)) title "cancelation model" w l lt 2, \
-    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH3($1)) title "logistic model" w l lt 3, \
-    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH4($1)) title "linear model" w l lt 4
+    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH1($1)) title "Constant model" w l lt 1, \
+    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH2($1)) title "Cancelation model" w l lt 2, \
+    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH3($1)) title "Logistic model" w l lt 3, \
+    'herdan_hapaxes_exp.csv' u 1:(-($3/$2)+TH4($1)) title "Linear model" w l lt 4
 
 # REPORT
 
@@ -335,3 +333,6 @@ print "gamma=",s(c4)*0.1
 print "alpha=",s(a4)*20
 print "The number of tokens:"
 print "n=",n
+
+
+
